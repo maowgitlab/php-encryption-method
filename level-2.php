@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encrypt & Decrypt Text</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .copyable {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 h-screen flex items-center justify-center">
     <div class="bg-white p-6 rounded shadow-md w-full max-w-sm">
@@ -47,13 +52,26 @@
 
             if ($action === 'encrypt') {
                 $encryptedText = encrypt($text, $key, $iv);
-                echo "<p class='mt-4'>Encrypted Text: <span class='font-mono bg-gray-100 p-2 rounded'>{$encryptedText}</span></p>";
+                echo "Encrypted Text: \n";
+                echo "<p class='mt-4 copyable' onclick='copyToClipboard(this)'><span class='font-mono bg-gray-100 p-2 rounded'>{$encryptedText}</span></p>";
             } elseif ($action === 'decrypt') {
                 $decryptedText = decrypt($text, $key, $iv);
-                echo "<p class='mt-4'>Decrypted Text: <span class='font-mono bg-gray-100 p-2 rounded'>{$decryptedText}</span></p>";
+                echo "Decrypted Text: \n";
+                echo "<p class='mt-4 copyable' onclick='copyToClipboard(this)'><span class='font-mono bg-gray-100 p-2 rounded'>{$decryptedText}</span></p>";
             }
         }
         ?>
     </div>
+
+    <script>
+        function copyToClipboard(element) {
+            const text = element.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Text copied to clipboard');
+            }).catch(err => {
+                alert('Failed to copy text: ' + err);
+            });
+        }
+    </script>
 </body>
 </html>
