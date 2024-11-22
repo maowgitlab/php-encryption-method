@@ -38,6 +38,11 @@
             $text = $_POST['text'];
             $key = $_POST['key'];
             $iv = $_POST['iv'];
+            
+            if (strlen($iv) !== 16) {
+                $iv = str_pad($iv, 16, "\0"); // Pad the IV to 16 bytes if needed
+            }
+
             $action = $_POST['action'];
 
             if ($action === 'encrypt') {
